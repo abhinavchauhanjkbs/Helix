@@ -1,0 +1,211 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&family=Poppins:wght@400;500;600&family=Work+Sans:wght@400;500;600&display=swap");
+@import "tailwindcss";
+
+/* ================= COLORS ================= */
+
+.bg-primary {
+  background-color: #842326;
+}
+
+.hero-heading-highlight::before,
+.hero-heading-highlight::after {
+  content: "";
+  position: absolute;
+  background: linear-gradient(135deg, rgba(241, 234, 234, 0.9), rgba(248, 246, 246, 0.5));
+  border-radius: 18px;
+  z-index: -1;
+}
+
+@media (min-width: 768px) {
+  .hero-heading-highlight::before {
+    top: -25px;
+    left: 140px;
+    width: 160px;
+    height: 120px;
+  }
+
+  .hero-heading-highlight::after {
+    top: 70px;
+    left: 220px;
+    width: 180px;
+    height: 110px;
+  }
+}
+
+.text-primary {
+  color: #8a3437;
+}
+
+.bg-lightPrimary {
+  background-color: #c88e90;
+}
+
+.bg-superLightPrimary {
+  background-color: #f4dbdb;
+}
+
+/* ================= FONTS ================= */
+
+.font-manrope {
+  font-family: "Manrope", "Helvetica Neue", Arial, sans-serif;
+}
+
+.font-work-sans {
+  font-family: "Work Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+.font-poppins {
+  font-family: "Poppins", "Helvetica Neue", Arial, sans-serif;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  font-family: "Poppins", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
+  color: #1f1f1f;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.heading-title,
+.heading-text {
+  font-family: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 700;
+}
+
+.section-label {
+  font-family: "Poppins", "Helvetica Neue", Arial, sans-serif;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #000000;
+}
+
+/* ================= HERO IMAGE ================= */
+
+.hero-image-wrapper {
+  position: relative;
+  /* Enable 3D perspective for hero image card */
+  perspective: 1600px;
+}
+
+/* 🔥 SHADOW — MATCH SLOPE OF MAIN IMAGE */
+.hero-image-bg {
+  position: absolute;
+  top: -10px;
+  left: 15px;
+  right: 40px;
+  height: 52px;
+  background-color: #f1eaea;
+  border-radius: 32px;
+  /* ✅ Modified to hide from left bottom corner */
+  clip-path: polygon(
+    0% 0%,
+    100% 6%,
+    100% 90%,
+    85% 100%,
+    0% 100%
+  );
+  transform: rotate(6deg);
+  z-index: 0;
+}
+
+/* Mobile devices only - rotate shadow anti-clockwise and extend right side */
+@media (max-width: 767px) {
+  .hero-image-bg {
+    transform: rotate(2deg);
+    right: 20px;
+  }
+}
+
+/* IMAGE (UNCHANGED) */
+.hero-image-main {
+  position: relative;
+  z-index: 2;
+
+  border-radius: 32px;
+  overflow: hidden;
+
+  clip-path: polygon(
+    0% 0%,
+    100% 6%,
+    100% 95%,
+    0% 100%
+  );
+}
+
+/* Give hero image a permanent 3D card effect on larger screens */
+@media (min-width: 768px) {
+  .hero-image-main {
+    transform-origin: center top;
+    transform: rotateX(7deg) rotateY(16deg) translateY(-10px);
+  }
+
+  .hero-image-main img {
+    transform: scale(1.03) translateY(2px);
+    transform-origin: center center;
+  }
+}
+
+/* ================= PARTNER LOGOS TRAIN ================= */
+@keyframes train-move {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-train-move {
+  animation: train-move 2s linear infinite;
+}
+
+.shadow-soft {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.shadow-elevated {
+  box-shadow: 0 20px 45px rgba(21, 21, 21, 0.12);
+}
+
+/* ================= CAROUSEL SLIDE ANIMATIONS ================= */
+
+.slider-track {
+  will-change: transform, opacity;
+}
+
+.slide-next {
+  animation: slide-from-right 0.78s ease-in-out both;
+}
+
+.slide-prev {
+  animation: slide-from-left 0.78s ease-in-out both;
+}
+
+@keyframes slide-from-right {
+  from {
+    transform: translateX(110px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-from-left {
+  from {
+    transform: translateX(-110px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
