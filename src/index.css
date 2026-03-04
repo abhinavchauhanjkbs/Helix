@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&family=Poppins:wght@400;500;600&family=Work+Sans:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Poppins:wght@400;500;600&family=Work+Sans:wght@400;500;600&display=swap");
 @import "tailwindcss";
 
 /* ================= COLORS ================= */
@@ -94,37 +94,26 @@ h6,
 
 .hero-image-wrapper {
   position: relative;
-  /* Enable 3D perspective for hero image card */
-  perspective: 1600px;
 }
 
 /* 🔥 SHADOW — MATCH SLOPE OF MAIN IMAGE */
 .hero-image-bg {
   position: absolute;
   top: -10px;
-  left: 15px;
-  right: 40px;
+  left: 22px;
+  right: 22px;
   height: 52px;
   background-color: #f1eaea;
   border-radius: 32px;
-  /* ✅ Modified to hide from left bottom corner */
+  /* ✅ Same slope as .hero-image-main */
   clip-path: polygon(
     0% 0%,
     100% 6%,
-    100% 90%,
-    85% 100%,
+    100% 94%,
     0% 100%
   );
-  transform: rotate(6deg);
+  transform: rotate(2deg);
   z-index: 0;
-}
-
-/* Mobile devices only - rotate shadow anti-clockwise and extend right side */
-@media (max-width: 767px) {
-  .hero-image-bg {
-    transform: rotate(2deg);
-    right: 20px;
-  }
 }
 
 /* IMAGE (UNCHANGED) */
@@ -132,28 +121,21 @@ h6,
   position: relative;
   z-index: 2;
 
+  transform: translateY(-12px);
+
   border-radius: 32px;
   overflow: hidden;
 
   clip-path: polygon(
     0% 0%,
     100% 6%,
-    100% 95%,
+    100% 94%,
     0% 100%
   );
 }
 
-/* Give hero image a permanent 3D card effect on larger screens */
-@media (min-width: 768px) {
-  .hero-image-main {
-    transform-origin: center top;
-    transform: rotateX(7deg) rotateY(16deg) translateY(-10px);
-  }
-
-  .hero-image-main img {
-    transform: scale(1.03) translateY(2px);
-    transform-origin: center center;
-  }
+.hero-image-dots {
+  transform: translateY(-12px);
 }
 
 /* ================= PARTNER LOGOS TRAIN ================= */
@@ -168,6 +150,28 @@ h6,
 
 .animate-train-move {
   animation: train-move 2s linear infinite;
+}
+
+/* ================= PRODUCTS TRAIN ================= */
+@keyframes products-train-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.products-train-track {
+  animation: products-train-scroll var(--products-train-duration, 18s) linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .products-train-track {
+    animation: none;
+    transform: translateX(0);
+  }
 }
 
 .shadow-soft {

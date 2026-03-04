@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { BsArrowUpRightCircleFill } from "react-icons/bs";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 const assets = {
   hero: "/assets/products-hero-bg.png",
@@ -34,10 +33,6 @@ const productCategories = [
       { name: "Keyboard Mouse", image: assets.products.keyboardMouse },
       { name: "Laptops", image: assets.products.laptop },
       { name: "CPU", image: assets.products.cpu },
-      { name: "Keyboard Mouse", image: assets.products.keyboardMouse },
-      { name: "Laptops", image: assets.products.laptop },
-      { name: "CPU", image: assets.products.cpu },
-      { name: "Monitor", image: assets.products.monitor },
     ],
   },
   {
@@ -58,10 +53,6 @@ const productCategories = [
       { name: "Google Suits", image: assets.cloud.googleSuite },
       { name: "Autodesk License", image: assets.cloud.autodesk },
       { name: "PDF License", image: assets.cloud.pdf },
-      { name: "Google Suits", image: assets.cloud.googleSuite },
-      { name: "Autodesk License", image: assets.cloud.autodesk },
-      { name: "PDF License", image: assets.cloud.pdf },
-      { name: "M365 License", image: assets.cloud.m365 },
     ],
   },
   {
@@ -82,10 +73,6 @@ const productCategories = [
       { name: "Keyboard Mouse", image: "/assets/products/keyboard-mouse.png" },
       { name: "SMPS", image: "/assets/products/SMPs.webp" },
       { name: "CPU Cabinets", image: "/assets/products/cpu.png" },
-      { name: "Keyboard Mouse", image: "/assets/products/keyboard-mouse.png" },
-      { name: "SMPS", image: "/assets/products/SMPs.webp" },
-      { name: "CPU Cabinets", image: "/assets/products/cpu.png" },
-      { name: "Motherboard", image: "/assets/products/Motherboard.jpg" },
     ],
   },
   {
@@ -106,10 +93,6 @@ const productCategories = [
       { name: "Ceiling Speaker", image: "/assets/products/Ceiling Speaker.jpg" },
       { name: "Wall Mount Speaker", image: "/assets/products/Wall Mount Speaker.jpg" },
       { name: "Amplifier", image: "/assets/products/Emplifier.jpg" },
-      { name: "Ceiling Speaker", image: "/assets/products/Ceiling Speaker.jpg" },
-      { name: "Wall Mount Speaker", image: "/assets/products/Wall Mount Speaker.jpg" },
-      { name: "Amplifier", image: "/assets/products/Emplifier.jpg" },
-      { name: "Mic", image: "/assets/products/Mic.jpg" },
     ],
   },
   {
@@ -123,6 +106,7 @@ const productCategories = [
   {
     title: "NETWORK PRODUCTS",
     columns: 4,
+    carousel: true,
     products: [
       { name: "Data Switch", image: "/assets/products/Data Switch.jpg" },
       { name: "POE Switch", image: "/assets/products/POE Switches.jpg" },
@@ -133,6 +117,7 @@ const productCategories = [
   {
     title: "VOICE PRODUCT",
     columns: 4,
+    carousel: true,
     products: [
       { name: "EPABX", image: "/assets/products/EPABX.jpg" },
       { name: "IP Phones", image: "/assets/products/IP Phones.jpeg" },
@@ -157,6 +142,10 @@ const ProductCard = ({ name, image }) => (
         src={image}
         alt={name}
         className="h-full w-full object-cover rounded-xl transition-transform duration-300 group-hover:scale-105"
+        loading="lazy"
+        decoding="async"
+        width={520}
+        height={520}
       />
     </div>
     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent rounded-xl" />
@@ -166,114 +155,78 @@ const ProductCard = ({ name, image }) => (
   </div>
 );
 
-const ProductCarousel = ({ title, products, itemsPerView = 4 }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [screenSize, setScreenSize] = useState(window.innerWidth);
-  
-  // Determine responsive itemsPerView
-  const getResponsiveItemsPerView = () => {
-    if (screenSize < 640) return 1; // Mobile
-    if (screenSize < 1024) return 2; // Tablet
-    return itemsPerView; // Desktop
-  };
+function normalizeCarouselProducts(products) {
+  if (!Array.isArray(products) || products.length === 0) return [];
 
-  const responsiveItemsPerView = getResponsiveItemsPerView();
-  const totalItems = products.length;
-  const maxIndex = Math.max(0, totalItems - responsiveItemsPerView);
+  // Avoid consecutive duplicates (by image first, then name as fallback).
+  const normalized = [];
+  for (const product of products) {
+    const prev = normalized[normalized.length - 1];
+    const sameAsPrev =
+      prev &&
+      ((prev.image && product.image && prev.image === product.image) ||
+        (!prev.image && !product.image && prev.name === product.name));
 
-  useEffect(() => {
-    const handleResize = () => {
-      setScreenSize(window.innerWidth);
-    };
+    if (!sameAsPrev) normalized.push(product);
+  }
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  // Avoid a duplicate at the loop seam (last item visually adjacent to first).
+  if (normalized.length > 1) {
+    const first = normalized[0];
+    const last = normalized[normalized.length - 1];
+    const sameAtSeam =
+      (first.image && last.image && first.image === last.image) ||
+      (!first.image && !last.image && first.name === last.name);
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
-  };
+    if (sameAtSeam) {
+      // Rotate until the seam is different (or we give up if all items are the same).
+      for (let i = 0; i < normalized.length; i++) {
+        normalized.push(normalized.shift());
+        const newFirst = normalized[0];
+        const newLast = normalized[normalized.length - 1];
+        const stillSame =
+          (newFirst.image && newLast.image && newFirst.image === newLast.image) ||
+          (!newFirst.image && !newLast.image && newFirst.name === newLast.name);
+        if (!stillSame) break;
+      }
+    }
+  }
 
-  const prevSlide = () => {
-    setCurrentIndex((prev) => Math.max(prev - 1, 0));
-  };
+  return normalized;
+}
 
-  const goToSlide = (index) => {
-    setCurrentIndex(Math.min(index, maxIndex));
-  };
-
-  // Calculate number of dots based on how many "pages" of items
-  const dotsCount = maxIndex + 1;
-
-  // Calculate visible items
-  const visibleProducts = products.slice(currentIndex, currentIndex + responsiveItemsPerView);
+const ProductTrain = ({ title, products }) => {
+  const normalizedProducts = normalizeCarouselProducts(products);
+  // Smaller duration = faster train.
+  const TRAIN_MIN_SECONDS = 10;
+  const TRAIN_SECONDS_PER_CARD = 1.8;
+  const durationSeconds = Math.max(
+    TRAIN_MIN_SECONDS,
+    normalizedProducts.length * TRAIN_SECONDS_PER_CARD
+  );
+  const looped = [...normalizedProducts, ...normalizedProducts];
 
   return (
-    <section className="pt-4 pb-8">
+    <section className="pt-4 pb-10">
       <h2 className="mb-7 text-center text-xl sm:text-2xl font-bold tracking-[0.05em] text-gray-700 font-work-sans">
         {title}
       </h2>
-      
-      <div className="relative px-6 sm:px-12 md:px-16">
-        {/* Previous Button */}
-        <button
-          onClick={prevSlide}
-          disabled={currentIndex === 0}
-          className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-200 ${
-            currentIndex === 0
-              ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-              : 'bg-[#842326] text-white hover:bg-[#6a1c1e] shadow-lg hover:scale-110'
-          }`}
-          aria-label="Previous"
-        >
-          <FiChevronLeft size={20} className="sm:hidden" />
-          <FiChevronLeft size={24} className="hidden sm:block" />
-        </button>
 
-        {/* Carousel Container - Shows only full items */}
-        <div className="overflow-hidden">
-          <div className="flex gap-2 sm:gap-3 md:gap-4">
-            {visibleProducts.map((product, index) => (
-              <div
-                key={`${product.name}-${currentIndex + index}`}
-                className="flex-1 min-w-0 md:w-[calc(50%-0.5rem)] md:flex-none lg:flex-1"
-              >
-                <ProductCard {...product} />
-              </div>
-            ))}
-          </div>
+      <div className="products-train relative overflow-hidden px-2 sm:px-6 md:px-10">
+        <div
+          className="products-train-track flex w-max"
+          style={{ "--products-train-duration": `${durationSeconds}s` }}
+        >
+          {looped.map((product, index) => (
+            <div
+              key={`${product.name}-${index}`}
+              aria-hidden={index >= normalizedProducts.length}
+              className="shrink-0 w-[82vw] max-w-[340px] sm:w-[360px] md:w-[320px] lg:w-[260px] pe-2 sm:pe-3 md:pe-4"
+            >
+              <ProductCard {...product} />
+            </div>
+          ))}
         </div>
-
-        {/* Next Button */}
-        <button
-          onClick={nextSlide}
-          disabled={currentIndex >= maxIndex}
-          className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-200 ${
-            currentIndex >= maxIndex
-              ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-              : 'bg-[#842326] text-white hover:bg-[#6a1c1e] shadow-lg hover:scale-110'
-          }`}
-          aria-label="Next"
-        >
-          <FiChevronRight size={20} className="sm:hidden" />
-          <FiChevronRight size={24} className="hidden sm:block" />
-        </button>
-      </div>
-
-      {/* Dots Indicator */}
-      <div className="flex justify-center gap-2 mt-6">
-        {Array.from({ length: dotsCount }).map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 rounded-full transition-all duration-200 ${
-              index === currentIndex
-                ? 'bg-[#842326] scale-110'
-                : 'bg-gray-300 hover:bg-gray-400'
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
       </div>
     </section>
   );
@@ -300,20 +253,22 @@ const ProductGrid = ({ title, products, columns }) => (
 
 const ProductCategory = ({ title, products, columns, carousel }) => {
   if (carousel) {
-    return <ProductCarousel title={title} products={products} itemsPerView={columns} />;
+    return <ProductTrain title={title} products={products} />;
   }
   return <ProductGrid title={title} products={products} columns={columns} />;
 };
 
 const CTASection = () => (
   <section className="relative py-16 overflow-hidden bg-primary">
-    <div 
-      className="absolute inset-0 bg-cover" 
-      style={{ 
-        backgroundImage: `url(${assets.cta})`,
-        backgroundPosition: "center 25%",
-        opacity: 0.1
-      }} 
+    <img
+      className="absolute inset-0 h-full w-full object-cover"
+      style={{ objectPosition: "center 25%", opacity: 0.1 }}
+      src={assets.cta}
+      alt=""
+      loading="lazy"
+      decoding="async"
+      width={1600}
+      height={900}
     />
 
     <div className="relative max-w-3xl mx-auto px-4 text-center text-white space-y-6">
@@ -357,7 +312,15 @@ const Products = () => {
         <div className="container mx-auto px-4 sm:px-6 max-w-4xl">
           <div className="flex items-center justify-center gap-3 mb-4">
             <p className="font-poppins text-black italic font-semibold text-sm tracking-wide">Our Products</p>
-            <img src="/assets/line.png" alt="line" className="h-[2px] w-16 object-cover" />
+            <img
+              src="/assets/line.png"
+              alt="line"
+              className="h-[2px] w-16 object-cover"
+              loading="lazy"
+              decoding="async"
+              width={64}
+              height={2}
+            />
           </div>
           <h2 className="mt-4 font-manrope text-3xl md:text-4xl" style={{ fontWeight: 400 }}>
             Explore Our Complete <span className="font-bold" style={{ fontWeight: 700 }}>Hardware Solutions</span>

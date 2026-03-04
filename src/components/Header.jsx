@@ -9,23 +9,6 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
 
-  function scrollToFooter(e) {
-    if (e && e.preventDefault) e.preventDefault();
-    setMobileMenuOpen(false);
-    // Prefer scrolling directly to the Solutions & Services column so the 3 options are visible.
-    const target = document.getElementById("solutions-services") || document.getElementById("site-footer");
-    if (target) {
-      try {
-        target.scrollIntoView({ behavior: "smooth", block: "center" });
-      } catch (err) {
-        // fallback
-        target.scrollIntoView({ behavior: "smooth" });
-      }
-    } else {
-      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-    }
-  }
-
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 w-full mx-auto shadow-md flex flex-col bg-white">
       {/* sub-header: mobile = phone+email left, Get Started right; tablet+ = same */}
@@ -115,12 +98,13 @@ const Header = () => {
                   </button>
                 </Link>
 
-                {/* Solution and Services - wrap "Services" to next line on tablet so Contact Us is visible */}
-                <button onClick={scrollToFooter} className={`inline-flex items-center cursor-pointer py-2 px-4 w-full sm:w-auto text-left sm:text-center md:leading-tight ${
+                <Link to="/solutions" onClick={() => setMobileMenuOpen(false)}>
+                  <button className={`inline-flex items-center cursor-pointer py-2 px-4 w-full sm:w-auto text-left sm:text-center md:leading-tight ${
                     location.pathname === "/solutions" ? "text-[#842326]" : "text-gray-700 hover:text-gray-900"
                   }`}>
-                  Solution and Services
-                </button>
+                    Solution and Services
+                  </button>
+                </Link>
                   {/* Dropdown */}
                 {/* <div className="absolute z-10 left-0 md:mt-10 w-64 bg-white shadow-lg rounded-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition-all duration-400 pointer-events-none group-hover:pointer-events-auto max-h-96 overflow-y-auto">
                     <div className="p-4 space-y-3">

@@ -97,7 +97,7 @@ const HeroSection = () => {
           </div>
 
           {/* SLIDER DOTS */}
-          <div className="absolute bottom-8 left-6 flex gap-2 z-30">
+          <div className="absolute bottom-8 left-6 flex gap-2 z-30 hero-image-dots">
             {imageData.map((_, index) => (
               <span
                 key={index}

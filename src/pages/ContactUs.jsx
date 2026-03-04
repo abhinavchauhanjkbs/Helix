@@ -81,6 +81,10 @@ const ContactUs = () => {
             alt="Contact Us Image"
             className="absolute inset-0 w-full h-full object-cover"
             style={{ objectPosition: "center 30%" }}
+            loading="eager"
+            decoding="async"
+            width={1600}
+            height={900}
           />
           {/* Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/60 to-black/60" />
@@ -99,7 +103,7 @@ const ContactUs = () => {
       <div className="container flex flex-col items-center justify-center space-y-3 mx-auto w-full p-4 sm:p-5 md:p-12 lg:p-24 mt-8 md:mt-12">
         <div className="flex items-center justify-center gap-2">
           <h1 className="italic font-bold md:text-balance text-sm">Contact Us</h1>
-          <img src="/assets/line.png" alt="Contact Icon" className="w-20 h-1" />
+          <img src="/assets/line.png" alt="Contact Icon" className="w-20 h-1" loading="lazy" decoding="async" width={80} height={4} />
         </div>
         <h1 className="text-2xl sm:text-3xl md:text-4xl text-center">
           {" "}
@@ -227,7 +231,7 @@ const ContactUs = () => {
           <div className="flex flex-col items-center justify-center space-y-4">
             <div className="flex items-center justify-center gap-2">
               <h1 className="italic font-bold text-sm md:text-base">Quick Support</h1>
-              <img src="/assets/line.png" alt="Contact Icon" className="w-20 h-1" />
+              <img src="/assets/line.png" alt="Contact Icon" className="w-20 h-1" loading="lazy" decoding="async" width={80} height={4} />
             </div>
             <h1 className="text-3xl md:text-[46px] font-bold text-center">
               We're Always <span className="text-primary">Ready to Help</span>
@@ -252,7 +256,7 @@ const ContactUs = () => {
               >
                 {/* Icon Circle */}
                 <div className="w-14 h-14 flex items-center justify-center bg-primary rounded-full">
-                  <img src={item.icon} alt={item.label} className="w-7 h-7" />
+                  <img src={item.icon} alt={item.label} className="w-7 h-7" loading="lazy" decoding="async" width={28} height={28} />
                 </div>
                 {/* Text */}
                 <div className="space-y-2">

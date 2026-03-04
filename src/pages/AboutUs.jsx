@@ -37,7 +37,7 @@ const OurStorySection = () => (
       <div className="order-2 md:order-1 lg:order-1 space-y-4 animate-slide-up">
         <div className="flex items-center gap-2">
           <span className="section-label text-black text-sm sm:text-base">Our Story</span>
-          <img src="/assets/line.png" alt="Line" className="h-1 w-12 sm:w-16" />
+          <img src="/assets/line.png" alt="Line" className="h-1 w-12 sm:w-16" loading="lazy" decoding="async" width={64} height={4} />
         </div>
         <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-manrope font-semibold">
           From <span className="text-primary">Vision to Innovation</span>
@@ -54,6 +54,10 @@ const OurStorySection = () => (
           src={assets.story}
           alt="Innovation concept"
           className="w-full rounded-2xl shadow-elevated"
+          loading="lazy"
+          decoding="async"
+          width={1200}
+          height={800}
         />
       </div>
     </div>
@@ -85,7 +89,7 @@ const MissionVisionSection = () => (
       <div className="text-center space-y-3 mb-8 md:mb-10 lg:mb-12">
         <div className="flex items-center justify-center gap-2">
           <span className="section-label text-black text-sm sm:text-base">Empower Growth</span>
-          <img src="/assets/line.png" alt="Line" className="h-1 w-12 sm:w-16" />
+          <img src="/assets/line.png" alt="Line" className="h-1 w-12 sm:w-16" loading="lazy" decoding="async" width={64} height={4} />
         </div>
         <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-manrope font-semibold">
           Our <span className="text-primary">Vision &amp; Mission</span>
@@ -99,12 +103,12 @@ const MissionVisionSection = () => (
       <div className="space-y-10">
         <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-10 items-center md:items-stretch border border-gray-200 rounded-2xl overflow-hidden p-0">
           <div className="relative -ml-4 sm:-ml-6">
-            <img src={assets.vision} alt="Vision" className="w-full md:h-full shadow-soft object-cover" />
+            <img src={assets.vision} alt="Vision" className="w-full md:h-full shadow-soft object-cover" loading="lazy" decoding="async" width={1200} height={800} />
           </div>
           <div className="space-y-4 text-center md:text-left p-4 sm:p-5 lg:p-6 px-2 sm:px-4">
             <div className="flex items-center gap-2 justify-center md:justify-start">
               <span className="section-label text-black text-sm sm:text-base">Our Vision</span>
-              <img src="/assets/line.png" alt="Line" className="h-1 w-12 sm:w-16" />
+              <img src="/assets/line.png" alt="Line" className="h-1 w-12 sm:w-16" loading="lazy" decoding="async" width={64} height={4} />
             </div>
             <h3 className="font-manrope font-bold text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px] leading-[120%] tracking-[0px] text-[#010101]">Building Future of Connected Business</h3>
             <p className="font-work-sans font-normal text-[15px] sm:text-[15px] md:text-[16px] leading-[150%] tracking-[0px] text-gray-600">
@@ -119,7 +123,7 @@ const MissionVisionSection = () => (
           <div className="order-2 md:order-1 lg:order-1 space-y-4 text-center md:text-left p-4 sm:p-5 lg:p-6 px-2 sm:px-4">
             <div className="flex items-center gap-2 justify-center md:justify-start">
               <span className="section-label text-black text-sm sm:text-base">Our Mission</span>
-              <img src="/assets/line.png" alt="Line" className="h-1 w-12 sm:w-16" />
+              <img src="/assets/line.png" alt="Line" className="h-1 w-12 sm:w-16" loading="lazy" decoding="async" width={64} height={4} />
             </div>
             <h3 className="font-manrope font-bold text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px] leading-[120%] tracking-[0px] text-[#010101]">Empowering Businesses Through Smarter IT</h3>
             <p className="font-work-sans font-normal text-[15px] sm:text-[15px] md:text-[16px] leading-[150%] tracking-[0px] text-gray-600">
@@ -128,7 +132,7 @@ const MissionVisionSection = () => (
             </p>
           </div>
           <div className="order-1 md:order-2 lg:order-2">
-            <img src={assets.mission} alt="Mission" className="w-full md:h-full shadow-soft object-cover" />
+            <img src={assets.mission} alt="Mission" className="w-full md:h-full shadow-soft object-cover" loading="lazy" decoding="async" width={1200} height={800} />
           </div>
         </div>
       </div>
@@ -142,7 +146,7 @@ const WhyChooseUsSection = () => (
       <div className="space-y-4 text-center lg:text-left order-1">
         <div className="flex items-center gap-2 justify-center lg:justify-start">
           <span className="section-label text-black text-sm sm:text-base">Why choose us</span>
-          <img src="/assets/line.png" alt="Line" className="h-1 w-12 sm:w-16" />
+          <img src="/assets/line.png" alt="Line" className="h-1 w-12 sm:w-16" loading="lazy" decoding="async" width={64} height={4} />
         </div>
         <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-manrope font-semibold">
           Why Businesses <span className="text-primary">Choose</span> <br /> <span className="text-primary">Helix</span>
@@ -157,7 +161,7 @@ const WhyChooseUsSection = () => (
       {/* Desktop: overlapping image + cards; Mobile: stacked */}
       <div className="relative min-h-[200px] sm:min-h-[240px] md:min-h-[280px] lg:h-[360px] order-2">
         <div className="absolute left-16 sm:left-20 md:left-16 lg:right-12 top-1/2 -translate-y-1/2 w-[70%] sm:w-[85%] md:w-[85%] lg:w-[75%] h-[180px] sm:h-[220px] md:h-[260px] lg:h-[300px] rounded-2xl overflow-hidden shadow-elevated">
-          <img src={assets.teamCelebration} alt="Team" className="w-full h-full object-cover" />
+          <img src={assets.teamCelebration} alt="Team" className="w-full h-full object-cover" loading="lazy" decoding="async" width={1200} height={800} />
         </div>
         <div className="absolute left-0 top-[48%] -translate-y-1/2 flex flex-col items-center space-y-2 sm:space-y-3 lg:space-y-4">
           {[
@@ -175,7 +179,7 @@ const WhyChooseUsSection = () => (
                 index === 1 ? "bg-primary text-white scale-105 lg:scale-110" : "text-gray-800"
               }`}
             >
-              <img src={feature.icon} alt={feature.title} className="w-6 h-6 sm:w-8 sm:h-8 md:w-8 md:h-10 lg:w-10 lg:h-10 mb-1 sm:mb-2" />
+              <img src={feature.icon} alt={feature.title} className="w-6 h-6 sm:w-8 sm:h-8 md:w-8 md:h-10 lg:w-10 lg:h-10 mb-1 sm:mb-2" loading="lazy" decoding="async" width={40} height={40} />
               {feature.title}
             </div>
           ))}
@@ -187,9 +191,15 @@ const WhyChooseUsSection = () => (
 
 const CTASection = () => (
   <section className="relative py-8 sm:py-10 md:py-12 lg:py-16 overflow-hidden bg-primary">
-    <div
-      className="absolute inset-0 bg-cover"
-      style={{ backgroundImage: `url(${assets.cta})`, backgroundPosition: "center 30%", opacity: 0.1 }}
+    <img
+      className="absolute inset-0 h-full w-full object-cover"
+      style={{ objectPosition: "center 30%", opacity: 0.1 }}
+      src={assets.cta}
+      alt=""
+      loading="lazy"
+      decoding="async"
+      width={1600}
+      height={900}
     />
     <div className="relative max-w-3xl mx-auto px-4 text-center text-white space-y-6">
       <h2 className="font-manrope text-[28px] sm:text-[34px] md:text-[42px] leading-[1.2] tracking-normal text-white text-center">

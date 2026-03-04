@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer id="site-footer" className="relative bg-white text-black max-w-full overflow-hidden min-h-[60rem] md:min-h-[48rem] h-auto pb-28 md:pb-0">
+    <footer id="site-footer" className="relative bg-white text-black max-w-full overflow-hidden min-h-[60rem] md:min-h-[48rem] h-auto pb-0">
       {/* Top Section */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-12 md:p-16 lg:p-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 items-start justify-center">
         {/* Social Media Links */}
@@ -100,42 +100,71 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Divider */}
-      <div className="border-t border-black/30 border-1 relative z-10"></div>
+      {/* Divider removed */}
 
-      {/* Bottom Section */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-3 flex flex-col md:flex-row justify-between items-center text-gray-700 relative z-10 gap-3 text-center md:text-left text-sm sm:text-base">
-        <p className="order-2 md:order-1">© HELIX 2025 All Rights Reserved.</p>
-        <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mt-0 md:mt-0 text-sm text-gray-700 font-normal order-1 md:order-2">
-          <a href="#" className="cursor-pointer">
-            Privacy Policy
-          </a>
-          <a href="#" className="cursor-pointer">
-            Terms of use
-          </a>
-          <a href="#" className="cursor-pointer">
-            Disclosure
-          </a>
+      {/* Mobile/Tablet: watermark between links and legal */}
+      <div className="lg:hidden relative z-10">
+        <div aria-hidden="true" className="flex justify-center items-center opacity-10 pointer-events-none select-none mt-1 mb-6 sm:mt-2 sm:mb-8">
+          <h1 className="text-[7rem] sm:text-[12rem] md:text-[14rem] font-bold tracking-widest text-gray-500 leading-none">
+            HELIX
+          </h1>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-5 pt-2 text-gray-700 text-sm sm:text-base flex flex-col gap-2 text-center sm:text-left sm:flex-row sm:items-center sm:justify-between font-normal">
+          <p className="whitespace-nowrap">&copy; HELIX 2025 All Rights Reserved.</p>
+          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-6 gap-y-2 font-normal">
+            <a href="#" className="cursor-pointer hover:font-bold">
+              Privacy Policy
+            </a>
+            <a href="#" className="cursor-pointer hover:font-bold">
+              Terms of use
+            </a>
+            <a href="#" className="cursor-pointer hover:font-bold">
+              Disclosure
+            </a>
+          </div>
         </div>
       </div>
 
-      {/* HELIX word below copyright for mobile */}
-      <div className="md:hidden absolute bottom-0 left-0 right-0 flex justify-center items-center opacity-10 pointer-events-none pb-0">
-        <h1 className="text-[7rem] sm:text-[12rem] font-bold tracking-widest text-gray-500 select-none leading-none">
-          HELIX
-        </h1>
+      {/* Laptop/Desktop: keep existing absolute legal */}
+      <div className="hidden lg:block absolute bottom-0 left-0 right-0 z-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-5 pt-4 text-gray-700 text-sm sm:text-base flex flex-col gap-2 text-center sm:text-left sm:flex-row sm:items-center sm:justify-between font-normal">
+          <p className="whitespace-nowrap">&copy; HELIX 2025 All Rights Reserved.</p>
+          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-6 gap-y-2 font-normal">
+            <a href="#" className="cursor-pointer hover:font-bold">
+              Privacy Policy
+            </a>
+            <a href="#" className="cursor-pointer hover:font-bold">
+              Terms of use
+            </a>
+            <a href="#" className="cursor-pointer hover:font-bold">
+              Disclosure
+            </a>
+          </div>
+        </div>
       </div>
 
-      {/* Tablet view (md to <lg) */}
-      <div className="hidden md:flex lg:hidden absolute bottom-0 left-0 right-0 justify-center items-end opacity-10 pointer-events-none pb-0">
-        <h1 className="text-[14rem] font-bold tracking-widest text-gray-500 select-none leading-none">
-          HELIX
-        </h1>
+      {/* Bottom Section - Hidden */}
+      <div className="hidden">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-3 flex flex-col md:flex-row justify-between items-center text-gray-700 relative z-10 gap-3 text-center md:text-left text-sm sm:text-base">
+          <p className="order-2 md:order-1">© HELIX 2025 All Rights Reserved.</p>
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mt-0 md:mt-0 text-sm text-gray-700 font-normal order-1 md:order-2">
+            <a href="#" className="cursor-pointer">
+              Privacy Policy
+            </a>
+            <a href="#" className="cursor-pointer">
+              Terms of use
+            </a>
+            <a href="#" className="cursor-pointer">
+              Disclosure
+            </a>
+          </div>
+        </div>
       </div>
 
       {/* Background HELIX Logo for desktop (lg+) */}
-      <div className="absolute inset-0 hidden lg:flex justify-center items-center lg:pt-[28rem] opacity-10 z-0 pointer-events-none overflow-hidden">
-        <h1 className="text-[12rem] lg:text-[25rem] font-bold tracking-widest text-gray-500 select-none">
+      <div className="absolute inset-0 hidden lg:flex justify-center items-center lg:pt-[18rem] opacity-10 z-0 pointer-events-none overflow-hidden">
+        <h1 className="text-[12rem] lg:text-[18rem] xl:text-[25rem] font-bold tracking-widest text-gray-500 select-none">
           HELIX
         </h1>
       </div>
