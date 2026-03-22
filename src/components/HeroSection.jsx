@@ -84,6 +84,9 @@ const HeroSection = () => {
           {/* BACKGROUND CAP */}
           <div className="hero-image-bg" />
 
+          {/* GREY SHADOW ABOVE IMAGE */}
+          <div className="hero-image-top-shadow" />
+
           {/* IMAGE (SLOPED TOP) */}
           <div className="relative z-20 overflow-hidden hero-image-main">
             <img

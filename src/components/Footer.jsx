@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer id="site-footer" className="relative bg-white text-black max-w-full overflow-hidden min-h-[60rem] md:min-h-[48rem] h-auto pb-0">
+    <footer id="site-footer" className="relative bg-white text-black max-w-full overflow-hidden min-h-[60rem] md:min-h-[48rem] h-auto pb-0 rounded-none">
       {/* Top Section */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-12 md:p-16 lg:p-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-10 items-start justify-center">
         {/* Social Media Links */}
@@ -11,7 +11,7 @@ const Footer = () => {
           <img
             src="/assets/HelixLogo.png"
             alt="Helix"
-            className="h-16 w-28 sm:h-20 sm:w-36 mb-4 object-contain"
+            className="h-16 w-28 sm:h-20 sm:w-36 mb-4 object-contain ml-2"
             loading="lazy"
             decoding="async"
           />
@@ -102,14 +102,8 @@ const Footer = () => {
 
       {/* Divider removed */}
 
-      {/* Mobile/Tablet: watermark between links and legal */}
+      {/* Mobile/Tablet: copyright section */}
       <div className="lg:hidden relative z-10">
-        <div aria-hidden="true" className="flex justify-center items-center opacity-10 pointer-events-none select-none mt-1 mb-6 sm:mt-2 sm:mb-8">
-          <h1 className="text-[7rem] sm:text-[12rem] md:text-[14rem] font-bold tracking-widest text-gray-500 leading-none">
-            HELIX
-          </h1>
-        </div>
-
         <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-5 pt-2 text-gray-700 text-sm sm:text-base flex flex-col gap-2 text-center sm:text-left sm:flex-row sm:items-center sm:justify-between font-normal">
           <p className="whitespace-nowrap">&copy; HELIX 2025 All Rights Reserved.</p>
           <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-6 gap-y-2 font-normal">
@@ -126,9 +120,23 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Laptop/Desktop: keep existing absolute legal */}
-      <div className="hidden lg:block absolute bottom-0 left-0 right-0 z-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-5 pt-4 text-gray-700 text-sm sm:text-base flex flex-col gap-2 text-center sm:text-left sm:flex-row sm:items-center sm:justify-between font-normal">
+      {/* Mobile/Tablet: HELIX watermark at the end */}
+      <div className="lg:hidden relative z-10">
+        <div aria-hidden="true" className="flex justify-center items-center opacity-10 pointer-events-none select-none mt-1 mb-6 sm:mt-2 sm:mb-8">
+          <h1 className="text-[7rem] sm:text-[15rem] font-bold tracking-widest text-gray-500 leading-none">
+            HELIX
+          </h1>
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div className="hidden lg:block relative z-10 w-full">
+        <div className="border-t border-gray-300"></div>
+      </div>
+
+      {/* Laptop/Desktop: keep existing absolute legal - positioned above helix */}
+      <div className="hidden lg:block relative z-20 max-w-7xl mx-auto px-4 sm:px-6 pb-5 pt-4">
+        <div className="text-gray-700 text-sm sm:text-base flex flex-col gap-2 text-center sm:text-left sm:flex-row sm:items-center sm:justify-between font-normal">
           <p className="whitespace-nowrap">&copy; HELIX 2025 All Rights Reserved.</p>
           <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-6 gap-y-2 font-normal">
             <a href="#" className="cursor-pointer hover:font-bold">
@@ -163,8 +171,8 @@ const Footer = () => {
       </div>
 
       {/* Background HELIX Logo for desktop (lg+) */}
-      <div className="absolute inset-0 hidden lg:flex justify-center items-center lg:pt-[18rem] opacity-10 z-0 pointer-events-none overflow-hidden">
-        <h1 className="text-[12rem] lg:text-[18rem] xl:text-[25rem] font-bold tracking-widest text-gray-500 select-none">
+      <div className="absolute inset-0 hidden lg:flex justify-center items-center lg:pt-[28rem] opacity-10 z-0 pointer-events-none overflow-hidden">
+        <h1 className="text-[13rem] lg:text-[19rem] xl:text-[27rem] font-bold tracking-widest text-gray-500 select-none">
           HELIX
         </h1>
       </div>

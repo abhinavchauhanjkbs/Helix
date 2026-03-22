@@ -96,7 +96,7 @@ h6,
   position: relative;
 }
 
-/* 🔥 SHADOW — MATCH SLOPE OF MAIN IMAGE */
+/* 🔥 SHADOW — HORIZONTAL */
 .hero-image-bg {
   position: absolute;
   top: -10px;
@@ -105,15 +105,26 @@ h6,
   height: 52px;
   background-color: #f1eaea;
   border-radius: 32px;
-  /* ✅ Same slope as .hero-image-main */
+  /* ✅ Horizontal shadow */
   clip-path: polygon(
     0% 0%,
-    100% 6%,
-    100% 94%,
+    100% 0%,
+    100% 100%,
     0% 100%
   );
-  transform: rotate(2deg);
   z-index: 0;
+}
+
+/* 🔥 GREY SHADOW ABOVE IMAGE */
+.hero-image-top-shadow {
+  position: absolute;
+  top: -20px;
+  left: 22px;
+  right: 22px;
+  height: 40px;
+  background-color: #e0e0e0;
+  border-radius: 32px;
+  z-index: 1;
 }
 
 /* IMAGE (UNCHANGED) */
@@ -128,8 +139,8 @@ h6,
 
   clip-path: polygon(
     0% 0%,
-    100% 6%,
-    100% 94%,
+    100% 0%,
+    100% 100%,
     0% 100%
   );
 }
