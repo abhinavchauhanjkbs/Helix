@@ -1,5 +1,8 @@
 import FooterQuote from "../components/FooterQuote";
 import { useState } from "react";
+import { apiUrl, isBackendConfigured } from "../lib/api";
+
+const LOCAL_SUBMISSIONS_KEY = "local_contact_submissions";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +14,8 @@ const ContactUs = () => {
     message: ''
   });
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const validateForm = () => {
@@ -24,22 +29,59 @@ const ContactUs = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = validateForm();
     if (Object.keys(newErrors).length === 0) {
-      // Form is valid, show success popup
-      setShowSuccessPopup(true);
-      // Reset form
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        company: '',
-        message: ''
-      });
-      setErrors({});
+      setIsSubmitting(true);
+      setSubmitError("");
+      const saveLocally = () => {
+        const previous = JSON.parse(localStorage.getItem(LOCAL_SUBMISSIONS_KEY) || "[]");
+        const now = new Date().toISOString();
+        const record = {
+          ...formData,
+          id: `${Date.now()}`,
+          createdAt: now,
+        };
+        const updated = [record, ...previous].slice(0, 200);
+        localStorage.setItem(LOCAL_SUBMISSIONS_KEY, JSON.stringify(updated));
+      };
+
+      try {
+        if (!isBackendConfigured()) {
+          saveLocally();
+        } else {
+          const res = await fetch(apiUrl("/api/contact-submissions"), {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+          });
+
+          if (!res.ok) {
+            const body = await res.json().catch(() => ({}));
+            throw new Error(body?.error || "Request failed");
+          }
+
+          // if API works, also mirror in local store for dashboard dev display
+          saveLocally();
+        }
+
+        // Form is valid: show success popup + reset
+        setShowSuccessPopup(true);
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          company: "",
+          message: "",
+        });
+        setErrors({});
+      } catch {
+        setSubmitError("Failed to submit. Please try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
     } else {
       setErrors(newErrors);
     }
@@ -187,7 +229,12 @@ const ContactUs = () => {
               />
               {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
             </div>
-            <button type="submit" className="bg-primary rounded-full w-full text-white md:py-2 font-semibold cursor-pointer transition-all duration-200 hover:bg-primary/90 hover:shadow-lg active:scale-95">
+            {submitError ? <p className="text-red-600 text-sm -mt-1">{submitError}</p> : null}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="bg-primary rounded-full w-full text-white md:py-2 font-semibold cursor-pointer transition-all duration-200 hover:bg-primary/90 hover:shadow-lg active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
+            >
               Submit Now
             </button>
           </div>

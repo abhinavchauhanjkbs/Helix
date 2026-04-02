@@ -5,6 +5,12 @@ import tailwindcss from "@tailwindcss/vite";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  server: {
+    // Proxy API calls from the React app to the Express backend.
+    proxy: {
+      "/api": "http://localhost:4000",
+    },
+  },
   build: {
     sourcemap: false,
     rollupOptions: {

@@ -232,7 +232,7 @@ const ProductTrain = ({ title, products }) => {
   );
 };
 
-const ProductGrid = ({ title, products, columns }) => (
+const ProductGrid = ({ title, products }) => (
   <section className="py-8">
     <h2 className="mb-7 text-center text-xl sm:text-2xl font-bold tracking-[0.05em] text-gray-600 font-work-sans">
       {title}
@@ -251,11 +251,11 @@ const ProductGrid = ({ title, products, columns }) => (
   </section>
 );
 
-const ProductCategory = ({ title, products, columns, carousel }) => {
+const ProductCategory = ({ title, products, carousel }) => {
   if (carousel) {
     return <ProductTrain title={title} products={products} />;
   }
-  return <ProductGrid title={title} products={products} columns={columns} />;
+  return <ProductGrid title={title} products={products} />;
 };
 
 const CTASection = () => (
